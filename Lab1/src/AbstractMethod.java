@@ -1,3 +1,4 @@
+import java.util.Comparator;
 import java.util.function.Function;
 
 public abstract class AbstractMethod implements OptimizationMethod {
@@ -25,4 +26,57 @@ public abstract class AbstractMethod implements OptimizationMethod {
     }
 
     public abstract double findMin();
+
+    protected class Point implements Comparable<Point> {
+        private double x;
+        private double y;
+
+        Point(double x) {
+            this.x = x;
+            this.y = f.apply(x);
+        }
+
+        Point(double x, double y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        Point(Point point) {
+            this.x = point.getX();
+            this.y = point.getY();
+        }
+
+        public double getX() {
+            return x;
+        }
+
+        public void setX(double x) {
+            this.x = x;
+            this.y = f.apply(x);
+        }
+
+        public void set(Point p) {
+            this.x = p.getX();
+            this.y = p.getY();
+        }
+
+
+
+        public double getY() {
+            return y;
+        }
+
+        public int compareToX(Point o) {
+            return Math.abs(o.getX() - this.x) < eps ? 0 : (this.x > o.getX() ? 1 : -1);
+        }
+
+        public int compareToY(Point o) {
+            return Math.abs(o.getY() - this.y) < eps ? 0 : (this.y > o.getY() ? 1 : -1);
+        }
+
+        @Override
+        public int compareTo(Point o) {
+            return compareToX(o);
+        }
+    }
 }
