@@ -44,7 +44,7 @@ public class BrentMethod extends AbstractMethod {
         while (left.compareToX(right) != 0) { // критерий сходимости
             boolean isSuccessiveParabolic = false;
             Point u = new Point(x);
-            if (pairwiseDifferent(x, w, v)) { // use GoldenRatioMethod
+            if (pairwiseDifferent(x, w, v)) { // use SuccessiveParabolicMethod
                 Point newX = new Point(Math.min(Math.min(x.getX(), w.getX()), v.getX()));
                 Point newV = new Point(Math.max(Math.max(x.getX(), w.getX()), v.getX()));
                 Point newW = new Point(getMediana(x, w, v, newX, newV));
@@ -55,7 +55,7 @@ public class BrentMethod extends AbstractMethod {
                     }
                 }
             }
-            if (!isSuccessiveParabolic) { // use SuccessiveParabolicMethod
+            if (!isSuccessiveParabolic) { // use GoldenRatioMethod
                 if (lenOX(left, x) > lenOX(x, right))
                     u =  findMinDot(left, x);
                 else
