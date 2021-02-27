@@ -30,24 +30,23 @@ public class BrentMethod extends AbstractMethod {
     Point findMinDot(Point left, Point right) {
         Point x1 = new Point(left.getX() + (1 - INV_GOLDEN_RATIO) * (right.getX() - left.getX()));
         Point x2 = new Point(left.getX() + INV_GOLDEN_RATIO * (right.getX() - left.getX()));
-        return x1.compareToX(x2) < 0 ? x1 : x2;
+        return x1.compareToY(x2) < 0 ? x1 : x2;
     }
 
     @Override
     public double findMin() {
         Point left = new Point(start);
         Point right = new Point(end);
-        Point middle = new Point((end + start) / 2);
-        Point x = new Point(middle);
-        Point w = new Point(middle);
-        Point v = new Point(middle);
+        Point x = new Point((end + start) / 2);
+        Point w = new Point(x);
+        Point v = new Point(x);
         double pred_len = (end - start) / 2;
         while (left.compareToX(right) != 0) { // критерий сходимости
             boolean isSuccessiveParabolic = false;
             Point u = new Point(x);
             if (pairwiseDifferent(x, w, v)) { // use SuccessiveParabolicMethod
-                Point newX = new Point(Math.min(Math.min(x.getX(), w.getX()), v.getX())); // 1
-                Point newV = new Point(Math.max(Math.max(x.getX(), w.getX()), v.getX())); // 3
+                Point newX = new Point(Math.min(Math.min(x.getX(), w.getX()), v.getX()));
+                Point newV = new Point(Math.max(Math.max(x.getX(), w.getX()), v.getX()));
                 Point newW = new Point(getMediana(x, w, v, newX, newV));
                 u = new Point(SuccessiveParabolicMethod.findMinDot(newX, newV, newW));
                 if (u.compareToX(left) > 0 && u.compareToX(right) < 0) {
@@ -57,26 +56,19 @@ public class BrentMethod extends AbstractMethod {
                 }
             }
             if (!isSuccessiveParabolic) {
-                if (lenOX(left, x) > lenOX(x, right)) { // use GoldenRatioMethod
-                    u = findMinDot(left, x);
-                    if (u.compareToY(x) <= 0) {
-                        right.set(x);
-                    } else {
-                        left.set(u);
-                    }
-                } else {
+                if (lenOX(left, x) > lenOX(x, right))
+                    u =  findMinDot(left, x);
+                else
                     u = findMinDot(x, right);
-                    if (u.compareToY(x) <= 0) {
-                        left.set(x);
-                    } else {
-                        right.set(u);
-                    }
-                }
             }
+
             pred_len = lenOX(left, right);
-            v.set(w);
-            w.set(x);
-            x.set(u);
+            SuccessiveParabolicMethod.recountPoint(left, x, right, u);
+            if (isSuccessiveParabolic) {
+                v.set(w);
+                w.set(x);
+                x.set(u);
+            }
         }
         return x.getX();
     }

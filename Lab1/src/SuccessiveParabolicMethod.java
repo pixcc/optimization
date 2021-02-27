@@ -20,6 +20,24 @@ public class SuccessiveParabolicMethod extends AbstractMethod  {
         return (left.getX() + middle.getX() - a1 / a2) / 2;
     }
 
+    public static void recountPoint(Point left, Point middle, Point right, Point minDot) {
+        if (minDot.compareToX(left) >= 0 && middle.compareToX(minDot) >= 0) {
+            if (minDot.compareToY(middle) <= 0) {
+                right.set(middle);
+                middle.set(minDot);
+            } else {
+                left.set(minDot);
+            }
+        } else {
+            if (minDot.compareToY(middle) <= 0) {
+                left.set(middle);
+                middle.set(minDot);
+            } else {
+                right.set(minDot);
+            }
+        }
+    }
+
     @Override
     public double findMin() {
         Point left = new Point(start);
@@ -31,21 +49,7 @@ public class SuccessiveParabolicMethod extends AbstractMethod  {
             if (minDot.compareToX(predMin) == 0) {
                 return minDot.getX();
             }
-            if (minDot.compareToX(left) >= 0 && middle.compareToX(minDot) >= 0) {
-                if (minDot.compareToY(middle) <= 0) {
-                    right.set(middle);
-                    middle.set(minDot);
-                } else {
-                    left.set(minDot);
-                }
-            } else {
-                if (minDot.compareToY(middle) < 0) {
-                    left.set(middle);
-                    middle.set(minDot);
-                } else {
-                    right.set(minDot);
-                }
-            }
+            recountPoint(left, middle, right, minDot);
             predMin.set(minDot);
         }
     }
