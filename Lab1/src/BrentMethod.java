@@ -55,7 +55,7 @@ public class BrentMethod extends AbstractMethod {
                     }
                 }
             }
-            if (!isSuccessiveParabolic) {
+            if (!isSuccessiveParabolic) { // use SuccessiveParabolicMethod
                 if (lenOX(left, x) > lenOX(x, right))
                     u =  findMinDot(left, x);
                 else
