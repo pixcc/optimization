@@ -41,7 +41,7 @@ public class BrentMethod extends AbstractMethod {
         Point w = new Point(x);
         Point v = new Point(x);
         double pred_len = (end - start) / 2;
-        while (left.compareToX(right) != 0) { // критерий сходимости
+        while (true) { // критерий сходимости
             boolean isSuccessiveParabolic = false;
             Point u = new Point(x);
             if (pairwiseDifferent(x, w, v)) { // use SuccessiveParabolicMethod
@@ -61,7 +61,8 @@ public class BrentMethod extends AbstractMethod {
                 else
                     u = findMinDot(x, right);
             }
-
+            if (x.compareToX(u) == 0)
+                return u.getX();
             pred_len = lenOX(left, right);
             SuccessiveParabolicMethod.recountPoint(left, x, right, u);
             if (isSuccessiveParabolic) {
@@ -70,6 +71,5 @@ public class BrentMethod extends AbstractMethod {
                 x.set(u);
             }
         }
-        return x.getX();
     }
 }
