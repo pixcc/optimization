@@ -3,37 +3,38 @@ import java.util.List;
 import java.util.function.Function;
 
 public class Main {
-    final static double analyticAns = 8.72691;
+    final static double analyticAns_7 = 8.72691;
+    final static double analyticAns_x_sinx = 0;
+    final static double analyticAns_6 = 0.1099;// хз
     public static void main(String[] args) {
-        Function<Double, Double> f = x -> Math.pow(Math.log10(x - 2), 2) + Math.pow(Math.log10(10 - x), 2) - Math.pow(x, 0.2);
-        test_7();
-        test_6();
-        test_x_sinx();
+       test_7();
+       test_6();
+       test_x_sinx();
     }
 
     private static void test_7() {
         Function<Double, Double> f = x -> Math.pow(Math.log10(x - 2), 2) + Math.pow(Math.log10(10 - x), 2) - Math.pow(x, 0.2);
-        run(f);
+        run(f, analyticAns_7, 6, 9.9);
     }
 
     private static void test_6() {
         Function<Double, Double> f = x -> -5 * Math.pow(x, 5) + 4 * Math.pow(x, 4) - 12 * Math.pow(x, 3) + 11 * Math.pow(x, 2) - 2 * x + 1;
-        run(f);
+        run(f, analyticAns_6, -0.5, 0.5);
     }
 
     private static void test_x_sinx() {
-        Function<Double, Double> f = x -> (x - 100) * (x - 100);
-        run(f);
+        Function<Double, Double> f = x -> x * Math.sin(x);
+        run(f, analyticAns_x_sinx, -0.5, 0.5);
     }
 
-    private static void run(Function<Double, Double> f) {
+    private static void run(Function<Double, Double> f, double analyticAns, double left, double right) {
         List<OptimizationMethod> methods = new ArrayList<>();
 
-        methods.add(new DichotomyMethod("Метод дихотомии", 1e-6, 6, 9.9, f, 1e-6));
-        methods.add(new GoldenRatioMethod( "Метод золотого сечения", 1e-9, 6, 9.9, f));
-        methods.add(new FibonacciMethod("Метод фибоначи", 1e-9, 6, 9.9, f));
-        methods.add(new SuccessiveParabolicMethod("Метод парфбол", 1e-9, 6, 9.9, f));
-        methods.add(new BrentMethod("Метод Брента",1e-9, 6, 9.9, f));
+        methods.add(new DichotomyMethod("Метод дихотомии", 1e-6, left, right, f, 1e-6));
+        methods.add(new GoldenRatioMethod( "Метод золотого сечения", 1e-9, left, right,  f));
+        methods.add(new FibonacciMethod("Метод фибоначи", 1e-9, left, right,  f));
+        methods.add(new SuccessiveParabolicMethod("Метод парабол", 1e-9, left, right, f));
+        methods.add(new BrentMethod("Метод Брента",1e-9, left, right,  f));
 
         for (OptimizationMethod method : methods) {
             System.out.println(method.toString());

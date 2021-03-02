@@ -11,9 +11,9 @@ public class SuccessiveParabolicMethod extends AbstractMethod  {
      * condition: f(left.x) < f(middle) < f(right.x)
      */
     private Point start_value(Point left, Point right) { // find random value in range(left.x, right.t)
-        Point middle = new Point(start + (end - start) * Math.random());
+        Point middle = new Point(left.getX() + (right.getX() - left.getX()) * Math.random());
         while (! (middle.compareToY(left) < 0 && middle.compareToY(right) < 0) ) {
-            middle.setX(start + (Math.random() * (end - start)));
+            middle.setX(left.getX() + (Math.random() * (right.getX() - left.getX())));
         }
         return middle;
     }
