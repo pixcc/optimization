@@ -6,13 +6,21 @@ public abstract class AbstractMethod implements OptimizationMethod {
     protected final double eps;
     protected final double start;
     protected final double end;
+    protected final String name;
     protected final Function<Double, Double> f;
 
-    protected AbstractMethod(double eps, double start, double end, Function<Double, Double> f) {
+
+
+    protected AbstractMethod(String name, double eps, double start, double end, Function<Double, Double> f) {
+        this.name = name;
         this.eps = eps;
         this.start = start;
         this.end = end;
         this.f = f;
+    }
+
+    public String toString() {
+        return name + " at " + "[" + start + ":" + end + "]" + " with exp = " + eps;
     }
 
     protected int compare(double x, double y) {

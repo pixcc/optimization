@@ -7,8 +7,8 @@ public class BrentMethod extends AbstractMethod {
     private static final double INV_GOLDEN_RATIO = (Math.sqrt(5) - 1) / 2;
 
 
-    BrentMethod(double eps, double start, double end, Function<Double, Double> f) {
-        super(eps, start, end, f);
+    BrentMethod(String name, double eps, double start, double end, Function<Double, Double> f) {
+        super(name, eps, start, end, f);
     }
 
     private boolean pairwiseDifferent(Point x, Point w, Point v) {

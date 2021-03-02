@@ -3,8 +3,8 @@ import java.util.function.Function;
 public class DichotomyMethod extends AbstractMethod {
     private final double delta;
 
-    public DichotomyMethod(double eps, double start, double end, Function<Double, Double> f, double delta) {
-        super(eps, start, end, f);
+    public DichotomyMethod(String name, double eps, double start, double end, Function<Double, Double> f, double delta) {
+        super(name, eps, start, end, f);
         this.delta = delta;
     }
 
