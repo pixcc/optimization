@@ -41,7 +41,9 @@ public class BrentMethod extends AbstractMethod {
         Point w = new Point(x);
         Point v = new Point(x);
         double pred_len = (end - start) / 2;
+        int ind = 0;
         while (true) { // критерий сходимости
+           // writeLog(0, 0, 0, 0, ind++);
             boolean isSuccessiveParabolic = false;
             Point u = new Point(x);
             if (pairwiseDifferent(x, w, v)) { // use SuccessiveParabolicMethod

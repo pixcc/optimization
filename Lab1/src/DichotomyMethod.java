@@ -12,13 +12,16 @@ public class DichotomyMethod extends AbstractMethod {
     public double findMin() {
         double left = start;
         double right = end;
+        int ind = 0;
         while ((right - left) / 2.0 > eps) {
             double x1 = (right + left - delta) / 2.0;
             double x2 = (right + left + delta) / 2.0;
 
             if (f.apply(x1) <= f.apply(x2)) {
+                writeLog(left, right, x2, f.apply(x2), ind++);
                 right = x2;
             } else {
+                writeLog(left, right, x1, f.apply(x1), ind++);
                 left = x1;
             }
 

@@ -23,14 +23,17 @@ public class FibonacciMethod extends AbstractMethod {
         double x2 = left + Fib[n - 1] * (right - left) / Fib[n];
         double f1 = f.apply(x1);
         double f2 = f.apply(x2);
+        int ind = 0;
         for (int k = 1; k <= n - 2; k++) {
             if (f1 > f2) {
+                //writeLog(right, left, x1, f.apply(x1), ind++);
                 left = x1;
                 x1 = x2;
                 x2 = left + Fib[n - k - 1] * (right - left) / Fib[n - k];
                 f1 = f2;
                 f2 = f.apply(x2);
             } else {
+                //writeLog(right, left, x1, f.apply(x1), ind++);
                 right = x2;
                 x2 = x1;
                 x1 = left + Fib[n - k - 2] * (right - left) / Fib[n - k];

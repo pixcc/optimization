@@ -1,3 +1,11 @@
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.Comparator;
 import java.util.function.Function;
 
@@ -8,8 +16,8 @@ public abstract class AbstractMethod implements OptimizationMethod {
     protected final double end;
     protected final String name;
     protected final Function<Double, Double> f;
-
-
+    private static final Charset FILE_CHARSET = StandardCharsets.UTF_8;
+    private static final Path outputFile = Path.of("outLog");
 
     protected AbstractMethod(String name, double eps, double start, double end, Function<Double, Double> f) {
         this.name = name;
@@ -17,6 +25,14 @@ public abstract class AbstractMethod implements OptimizationMethod {
         this.start = start;
         this.end = end;
         this.f = f;
+    }
+
+    protected void writeLog(double left, double right, double x, double y, int ind) {
+        try(BufferedWriter writer = Files.newBufferedWriter(outputFile, FILE_CHARSET, StandardOpenOption.APPEND)) {
+            writer.append(String.format("%d & [%.4f : %.4f] & %.4f & (%.4f, %.4f) \\\\ \n", ind, left, right, Math.abs(right - left), x, y));
+        } catch(IOException e) {
+            // do nothing
+        }
     }
 
     public String toString() {
@@ -85,6 +101,10 @@ public abstract class AbstractMethod implements OptimizationMethod {
         @Override
         public int compareTo(Point o) {
             return compareToX(o);
+        }
+
+        protected void printLog(double left, double right, double x, double y, int inter) {
+
         }
     }
 }

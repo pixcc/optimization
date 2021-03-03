@@ -6,10 +6,17 @@ public class Main {
     final static double analyticAns_7 = 8.72691;
     final static double analyticAns_x_sinx = 0;
     final static double analyticAns_6 = 0.1099;// хз
+    final static double analyticKek = -3.0;// хз
     public static void main(String[] args) {
-       test_7();
-       test_6();
-       test_x_sinx();
+       //test_7();
+       //test_6();
+       //test_x_sinx();
+        test_kek();
+    }
+
+    private static void test_kek() {
+        Function<Double, Double> f = x -> 12 * x + 2 * x * x - 5 * x * x * x - (5 * Math.pow(x, 4)) / 4 + (3 * Math.pow(x, 5) / 5) + Math.pow(x, 6) / 6;
+        run(f, analyticKek, -3.4, -2);
     }
 
     private static void test_7() {
@@ -30,11 +37,11 @@ public class Main {
     private static void run(Function<Double, Double> f, double analyticAns, double left, double right) {
         List<OptimizationMethod> methods = new ArrayList<>();
 
-        methods.add(new DichotomyMethod("Метод дихотомии", 1e-6, left, right, f, 1e-6));
-        methods.add(new GoldenRatioMethod( "Метод золотого сечения", 1e-9, left, right,  f));
-        methods.add(new FibonacciMethod("Метод фибоначи", 1e-9, left, right,  f));
-        methods.add(new SuccessiveParabolicMethod("Метод парабол", 1e-9, left, right, f));
-        methods.add(new BrentMethod("Метод Брента",1e-9, left, right,  f));
+        methods.add(new DichotomyMethod("Метод дихотомии", 1e-4, left, right, f, 1e-6));
+        methods.add(new GoldenRatioMethod( "Метод золотого сечения", 1e-4, left, right,  f));
+        methods.add(new FibonacciMethod("Метод фибоначи", 1e-6, left, right,  f));
+        methods.add(new SuccessiveParabolicMethod("Метод парабол", 1e-4, left, right, f));
+        methods.add(new BrentMethod("Метод Брента",1e-6, left, right,  f));
 
         for (OptimizationMethod method : methods) {
             System.out.println(method.toString());
