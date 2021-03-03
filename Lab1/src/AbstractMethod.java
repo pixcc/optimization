@@ -27,9 +27,35 @@ public abstract class AbstractMethod implements OptimizationMethod {
         this.f = f;
     }
 
-    protected void writeLog(double left, double right, double x, double y, int ind) {
+    protected void writeLog(String  opts) {
         try(BufferedWriter writer = Files.newBufferedWriter(outputFile, FILE_CHARSET, StandardOpenOption.APPEND)) {
-            writer.append(String.format("%d & [%.4f : %.4f] & %.4f & (%.4f, %.4f) \\\\ \n", ind, left, right, Math.abs(right - left), x, y));
+            StringBuilder ans = new StringBuilder();
+            ans.append(opts);
+            ans.append(" \\\\ \n");
+            writer.append(ans);
+        } catch(IOException e) {
+            // do nothing
+        }
+    }
+
+    double lenOX(Point a, Point b) {
+        return Math.abs(a.getX() - b.getX());
+    }
+    double lenOX(double a, double b) {
+        return Math.abs(a - b);
+    }
+
+    protected void writeLogString(String inf) {
+        try(BufferedWriter writer = Files.newBufferedWriter(outputFile, FILE_CHARSET, StandardOpenOption.APPEND)) {
+            writer.append(inf + "\n");
+        } catch(IOException e) {
+            // do nothing
+        }
+    }
+
+    protected void writeLogInfAboutMethod() {
+        try(BufferedWriter writer = Files.newBufferedWriter(outputFile, FILE_CHARSET, StandardOpenOption.APPEND)) {
+            writer.append(toString() + "\n");
         } catch(IOException e) {
             // do nothing
         }
@@ -51,7 +77,8 @@ public abstract class AbstractMethod implements OptimizationMethod {
 
     public abstract double findMin();
 
-    protected class Point implements Comparable<Point> {
+    public class Point implements Comparable<Point> {
+        private double epsY = 1e-9;
         private double x;
         private double y;
 
@@ -68,6 +95,10 @@ public abstract class AbstractMethod implements OptimizationMethod {
         Point(Point point) {
             this.x = point.getX();
             this.y = point.getY();
+        }
+
+        public String toString() {
+            return String.format("(%.4f:%.4f)", x, y);
         }
 
         public double getX() {
@@ -95,7 +126,7 @@ public abstract class AbstractMethod implements OptimizationMethod {
         }
 
         public int compareToY(Point o) {
-            return Math.abs(o.getY() - this.y) < eps ? 0 : (this.y > o.getY() ? 1 : -1);
+            return Math.abs(o.getY() - this.y) < epsY ? 0 : (this.y > o.getY() ? 1 : -1);
         }
 
         @Override
