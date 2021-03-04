@@ -12,7 +12,7 @@ public class DichotomyMethod extends AbstractMethod {
     public double findMin() {
         Point left = new Point(start);
         Point right = new Point(end);
-        while ((right.getX() - left.getX()) / 2.0 > eps) {
+        while (right.getX() - left.getX() > eps * 2) {
             Point x1 = new Point((right.getX() + left.getX() - delta) / 2.0);
             Point x2 = new Point((right.getX() + left.getX() + delta) / 2.0);
             if (x1.getY() <= x2.getY()) {
