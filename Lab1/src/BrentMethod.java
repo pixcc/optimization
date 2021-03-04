@@ -15,7 +15,7 @@ public class BrentMethod extends AbstractMethod {
         return x.compareToX(w) != 0 && x.compareToX(v) != 0 && w.compareToX(v) != 0;
     }
 
-    double getMediana(Point ... points) {
+    double getMediana(Point... points) {
         long ans = 0;
         for (Point point : points) {
             ans = ans ^ Double.doubleToRawLongBits(point.getX());
@@ -59,12 +59,12 @@ public class BrentMethod extends AbstractMethod {
             }
             if (!isSuccessiveParabolic) { // use GoldenRatioMethod
                 if (lenOX(left, x) > lenOX(x, right))
-                    u =  findMinDot(left, x);
+                    u = findMinDot(left, x);
                 else
                     u = findMinDot(x, right);
             }
             writeLog(String.format("%d & [%.4f:%.4f] & %.4f & %.4f & %s & %s & %s & %s", ind++, left.getX(), right.getX(), len, pred_len / len,
-            x.toString(), w.toString(), u.toString(), isSuccessiveParabolic ? "парабола" : "золотое сечение" ));
+                    x.toString(), w.toString(), u.toString(), isSuccessiveParabolic ? "парабола" : "золотое сечение"));
             if (x.compareToX(u) == 0)
                 return u.getX();
             v.set(w);

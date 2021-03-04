@@ -1,21 +1,9 @@
 import java.util.function.Function;
 
-public class SuccessiveParabolicMethod extends AbstractMethod  {
+public class SuccessiveParabolicMethod extends AbstractMethod {
 
-    SuccessiveParabolicMethod(String name,double eps, double start, double end, Function<Double, Double> f) {
+    SuccessiveParabolicMethod(String name, double eps, double start, double end, Function<Double, Double> f) {
         super(name, eps, start, end, f);
-    }
-
-    /**
-     * Find random Point middle in range(left.x, right.x), that satisfies
-     * condition: f(left.x) < f(middle) < f(right.x)
-     */
-    private Point start_value(Point left, Point right) { // find random value in range(left.x, right.t)
-        Point middle = new Point(left.getX() + (right.getX() - left.getX()) * Math.random());
-        while (! (middle.compareToY(left) < 0 && middle.compareToY(right) < 0) ) {
-            middle.setX(left.getX() + (Math.random() * (right.getX() - left.getX())));
-        }
-        return middle;
     }
 
     /**
@@ -26,7 +14,6 @@ public class SuccessiveParabolicMethod extends AbstractMethod  {
         double a2 = ((right.getY() - left.getY()) / (right.getX() - left.getX()) - a1) / (right.getX() - middle.getX());
         return (left.getX() + middle.getX() - a1 / a2) / 2;
     }
-
 
     /**
      * recount new range
@@ -49,6 +36,18 @@ public class SuccessiveParabolicMethod extends AbstractMethod  {
                 right.set(minDot);
             }
         }
+    }
+
+    /**
+     * Find random Point middle in range(left.x, right.x), that satisfies
+     * condition: f(left.x) < f(middle) < f(right.x)
+     */
+    private Point start_value(Point left, Point right) { // find random value in range(left.x, right.t)
+        Point middle = new Point(left.getX() + (right.getX() - left.getX()) * Math.random());
+        while (!(middle.compareToY(left) < 0 && middle.compareToY(right) < 0)) {
+            middle.setX(left.getX() + (Math.random() * (right.getX() - left.getX())));
+        }
+        return middle;
     }
 
     /**

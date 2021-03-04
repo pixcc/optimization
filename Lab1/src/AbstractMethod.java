@@ -1,23 +1,21 @@
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.util.Comparator;
 import java.util.function.Function;
 
 public abstract class AbstractMethod implements OptimizationMethod {
     private static final double COMPARE_PRECISION = 1e-10;
+    private static final Charset FILE_CHARSET = StandardCharsets.UTF_8;
+    private static final Path outputFile = Path.of("outLog");
     protected final double eps;
     protected final double start;
     protected final double end;
     protected final String name;
     protected final Function<Double, Double> f;
-    private static final Charset FILE_CHARSET = StandardCharsets.UTF_8;
-    private static final Path outputFile = Path.of("outLog");
 
     protected AbstractMethod(String name, double eps, double start, double end, Function<Double, Double> f) {
         this.name = name;
@@ -28,12 +26,12 @@ public abstract class AbstractMethod implements OptimizationMethod {
     }
 
     protected void writeLog(String opts) {
-        try(BufferedWriter writer = Files.newBufferedWriter(outputFile, FILE_CHARSET, StandardOpenOption.APPEND)) {
+        try (BufferedWriter writer = Files.newBufferedWriter(outputFile, FILE_CHARSET, StandardOpenOption.APPEND)) {
             StringBuilder ans = new StringBuilder();
             ans.append(opts);
             ans.append(" \\\\ \n");
             writer.append(ans);
-        } catch(IOException e) {
+        } catch (IOException e) {
             // do nothing
         }
     }
@@ -41,22 +39,23 @@ public abstract class AbstractMethod implements OptimizationMethod {
     double lenOX(Point a, Point b) {
         return Math.abs(a.getX() - b.getX());
     }
+
     double lenOX(double a, double b) {
         return Math.abs(a - b);
     }
 
     protected void writeLogString(String inf) {
-        try(BufferedWriter writer = Files.newBufferedWriter(outputFile, FILE_CHARSET, StandardOpenOption.APPEND)) {
+        try (BufferedWriter writer = Files.newBufferedWriter(outputFile, FILE_CHARSET, StandardOpenOption.APPEND)) {
             writer.append(inf + "\n");
-        } catch(IOException e) {
+        } catch (IOException e) {
             // do nothing
         }
     }
 
     protected void writeLogInfAboutMethod() {
-        try(BufferedWriter writer = Files.newBufferedWriter(outputFile, FILE_CHARSET, StandardOpenOption.APPEND)) {
+        try (BufferedWriter writer = Files.newBufferedWriter(outputFile, FILE_CHARSET, StandardOpenOption.APPEND)) {
             writer.append(toString() + "\n");
-        } catch(IOException e) {
+        } catch (IOException e) {
             // do nothing
         }
     }
@@ -114,7 +113,6 @@ public abstract class AbstractMethod implements OptimizationMethod {
             this.x = p.getX();
             this.y = p.getY();
         }
-
 
 
         public double getY() {
