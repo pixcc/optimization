@@ -41,16 +41,18 @@ public class BrentMethod extends AbstractMethod {
         double len = pred_len;
         writeLogInfAboutMethod();
         int ind = 0;
-        while (true) { // критерий сходимости
+        while (true) {
             boolean isSuccessiveParabolic = false;
             Point u = new Point(x);
             if (pairwiseDifferent(x, w, v)) { // use SuccessiveParabolicMethod
-                Point newX = new Point(Math.min(Math.min(x.getX(), w.getX()), v.getX()));
-                Point newV = new Point(Math.max(Math.max(x.getX(), w.getX()), v.getX()));
-                Point newW = new Point(getMediana(x, w, v, newX, newV));
-                u = new Point(SuccessiveParabolicMethod.findMinDot(newX, newV, newW));
+                List<Point> points = new ArrayList<>();
+                points.add(x);
+                points.add(w);
+                points.add(v);
+                points.sort(null);
+                u = new Point(SuccessiveParabolicMethod.findMinDot(points.get(0), points.get(1), points.get(2)));
                 if (u.compareToX(left) > 0 && u.compareToX(right) < 0) {
-                    if (pred_len / 2 < lenOX(u, x)) {
+                    if (pred_len * 2 > lenOX(u, x)) {
                         isSuccessiveParabolic = true;
                     }
                 }
@@ -61,18 +63,16 @@ public class BrentMethod extends AbstractMethod {
                 else
                     u = findMinDot(x, right);
             }
-            writeLog(String.format("%d & [%.4f:%.4f] & %.4f & %.4f & %s & %s & %s", ind++, left.getX(), right.getX(), len, pred_len / len,
-            x.toString(), w.toString(), u.toString()));
+            writeLog(String.format("%d & [%.4f:%.4f] & %.4f & %.4f & %s & %s & %s & %s", ind++, left.getX(), right.getX(), len, pred_len / len,
+            x.toString(), w.toString(), u.toString(), isSuccessiveParabolic ? "парабола" : "золотое сечение" ));
             if (x.compareToX(u) == 0)
                 return u.getX();
+            v.set(w);
+            w.set(x);
             SuccessiveParabolicMethod.recountPoint(left, x, right, u);
+            x.set(u);
             pred_len = len;
             len = lenOX(left, right);
-            if (isSuccessiveParabolic) {
-                v.set(w);
-                w.set(x);
-                x.set(u);
-            }
         }
     }
 }
