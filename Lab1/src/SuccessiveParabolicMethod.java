@@ -66,8 +66,6 @@ public class SuccessiveParabolicMethod extends AbstractMethod  {
         int ind = 0;
         while (true) {
             Point minDot = new Point(findMinDot(left, middle, right));
-            writeLog(String.format("%d & [%.5f : %.5f] & %.5f & %.5f & %s & %s",
-                    ind++, left.getX(), right.getX(), len, pred_len / len, middle.toString(), minDot.toString()));
             if (minDot.compareToX(predMin) == 0) {
                 return minDot.getX();
             }

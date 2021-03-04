@@ -13,6 +13,7 @@ public class FibonacciMethod extends AbstractMethod {
         ArrayList<Long> Fib = new ArrayList<>();
         Fib.add(0L);
         Fib.add(1L);
+
         double maxFib = (end - start) / eps;
         int n = 1;
         while (Fib.get(n) <= maxFib) {

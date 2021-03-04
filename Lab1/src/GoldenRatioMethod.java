@@ -13,6 +13,8 @@ public class GoldenRatioMethod extends AbstractMethod {
         double r = end;
         double x1 = l + (1 - INV_GOLDEN_RATIO) * (r - l);
         double x2 = l + INV_GOLDEN_RATIO * (r - l);
+        counter++;
+        counter++;
         double fx1 = f.apply(x1);
         double fx2 = f.apply(x2);
         double len = lenOX(r, l);
@@ -24,12 +26,14 @@ public class GoldenRatioMethod extends AbstractMethod {
                 x2 = x1;
                 x1 = r - INV_GOLDEN_RATIO * (r - l);
                 fx2 = fx1;
+                counter++;
                 fx1 = f.apply(x1);
             } else {
                 l = x1;
                 x1 = x2;
                 x2 = l + INV_GOLDEN_RATIO * (r - l);
                 fx1 = fx2;
+                counter++;
                 fx2 = f.apply(x2);
             }
             pred_len = len;
