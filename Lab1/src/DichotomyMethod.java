@@ -10,27 +10,17 @@ public class DichotomyMethod extends AbstractMethod {
 
     @Override
     public double findMin() {
-        double left = start;
-        double right = end;
-        writeLogInfAboutMethod();
-        double len = lenOX(start, end);
-        double pred_len = len;
-        int ind = 0;
-        while ((right - left) / 2.0 > eps) {
-            double x1 = (right + left - delta) / 2.0;
-            double x2 = (right + left + delta) / 2.0;
-            writeLog(String.format("%d & [%.5f : %.5f] & %.5f & %.5f & %s & %s", ind++, left, right,
-                    len, pred_len / len,
-                    new Point(x1).toString(), new Point(x2).toString()));
-            if (f.apply(x1) <= f.apply(x2)) {
+        Point left = new Point(start);
+        Point right = new Point(end);
+        while ((right.getX() - left.getX()) / 2.0 > eps) {
+            Point x1 = new Point((right.getX() + left.getX() - delta) / 2.0);
+            Point x2 = new Point((right.getX() + left.getX() + delta) / 2.0);
+            if (x1.getY() <= x2.getY()) {
                 right = x2;
             } else {
                 left = x1;
             }
-            pred_len = len;
-            len = lenOX(right, left);
-
         }
-        return (left + right) / 2.0;
+        return (left.getX() + right.getX()) / 2.0;
     }
 }
