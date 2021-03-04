@@ -60,21 +60,14 @@ public class SuccessiveParabolicMethod extends AbstractMethod  {
         Point right = new Point(end);
         Point middle = start_value(left, right);
         Point predMin = new Point(Math.max(start, end));
-        writeLogInfAboutMethod();
-        double len = lenOX(right, left);
-        double pred_len = len;
         int ind = 0;
         while (true) {
             Point minDot = new Point(findMinDot(left, middle, right));
-            writeLog(String.format("%d & [%.5f : %.5f] & %.5f & %.5f & %s & %s",
-                    ind++, left.getX(), right.getX(), len, pred_len / len, middle.toString(), minDot.toString()));
             if (minDot.compareToX(predMin) == 0) {
                 return minDot.getX();
             }
             recountPoint(left, middle, right, minDot);
             predMin.set(minDot);
-            pred_len = len;
-            len = lenOX(right, left);
         }
     }
 }
