@@ -1,16 +1,14 @@
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.util.Comparator;
 import java.util.function.Function;
 
 public abstract class AbstractMethod implements OptimizationMethod {
-    private static final double COMPARE_PRECISION = 1e-10;
+    private static final double COMPARE_PRECISION = 1e-15;
     protected final double eps;
     protected final double start;
     protected final double end;
@@ -18,6 +16,7 @@ public abstract class AbstractMethod implements OptimizationMethod {
     protected final Function<Double, Double> f;
     private static final Charset FILE_CHARSET = StandardCharsets.UTF_8;
     private static final Path outputFile = Path.of("outLog");
+    public int counter = 0;
 
     protected AbstractMethod(String name, double eps, double start, double end, Function<Double, Double> f) {
         this.name = name;
@@ -78,12 +77,13 @@ public abstract class AbstractMethod implements OptimizationMethod {
     public abstract double findMin();
 
     public class Point implements Comparable<Point> {
-        private double epsY = 1e-9;
+        private double epsY = 1e-15;
         private double x;
         private double y;
 
         Point(double x) {
             this.x = x;
+            counter++;
             this.y = f.apply(x);
         }
 
@@ -107,6 +107,7 @@ public abstract class AbstractMethod implements OptimizationMethod {
 
         public void setX(double x) {
             this.x = x;
+            counter++;
             this.y = f.apply(x);
         }
 

@@ -19,9 +19,10 @@ public class DichotomyMethod extends AbstractMethod {
         while ((right - left) / 2.0 > eps) {
             double x1 = (right + left - delta) / 2.0;
             double x2 = (right + left + delta) / 2.0;
-            writeLog(String.format("%d & [%.5f : %.5f] & %.5f & %.5f & %s & %s", ind++, left, right,
+            /*writeLog(String.format("%d & [%.5f : %.5f] & %.5f & %.5f & %s & %s", ind++, left, right,
                     len, pred_len / len,
-                    new Point(x1).toString(), new Point(x2).toString()));
+                    new Point(x1).toString(), new Point(x2).toString()));*/
+            counter += 2;
             if (f.apply(x1) <= f.apply(x2)) {
                 right = x2;
             } else {

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.function.Function;
 
 public class FibonacciMethod extends AbstractMethod {
@@ -8,19 +9,24 @@ public class FibonacciMethod extends AbstractMethod {
 
     @Override
     public double findMin() {
-        int n = (int) (Math.log(Math.ceil(Math.sqrt(5) * (end - start) / eps)) / Math.log((1 + Math.sqrt(5)) / 2.0) + 1);
-        int[] Fib = new int[n + 1];
-        Fib[0] = 0;
-        Fib[1] = 1;
 
-        for (int i = 2; i < n + 1; i++) {
-            Fib[i] = Fib[i - 2] + Fib[i - 1];
+        ArrayList<Long> Fib = new ArrayList<>();
+        Fib.add(0L);
+        Fib.add(1L);
+        double test = (end - start) / eps;
+        int i = 1;
+        while (Fib.get(i) <= test) {
+            Fib.add(Fib.get(i) + Fib.get(i - 1));
+            i++;
         }
+
+        int n = i;
 
         double left = start;
         double right = end;
-        double x1 = left + Fib[n - 2] * (right - left) / Fib[n];
-        double x2 = left + Fib[n - 1] * (right - left) / Fib[n];
+        double x1 = left + Fib.get(n - 2) * (right - left) / Fib.get(n);
+        double x2 = left + Fib.get(n - 1) * (right - left) / Fib.get(n);
+        counter += 2;
         double f1 = f.apply(x1);
         double f2 = f.apply(x2);
         double len = lenOX(left, right);
@@ -29,27 +35,29 @@ public class FibonacciMethod extends AbstractMethod {
         int ind = 0;
         for (int k = 1; k <= n - 2; k++) {
             if (f1 > f2) {
-                writeLog(String.format("%d & [%.5f : %.5f] & %.5f & %.5f & %s & %s", ind++, left, right, len, pred_len / len,
-                        new Point(x1).toString(), new Point(x2).toString()));
+                /*writeLog(String.format("%d & [%.5f : %.5f] & %.5f & %.5f & %s & %s", ind++, left, right, len, pred_len / len,
+                        new Point(x1).toString(), new Point(x2).toString()));*/
                 left = x1;
                 x1 = x2;
-                x2 = left + Fib[n - k - 1] * (right - left) / Fib[n - k];
+                counter++;
+                x2 = left + Fib.get(n - k - 1) * (right - left) / Fib.get(n - k);
                 f1 = f2;
                 f2 = f.apply(x2);
             } else {
-                writeLog(String.format("%d & [%.5f : %.5f] & %.5f & %.5f & %s & %s", ind++, left, right, len, pred_len / len,
-                        new Point(x1).toString(), new Point(x2).toString()));
+                /*writeLog(String.format("%d & [%.5f : %.5f] & %.5f & %.5f & %s & %s", ind++, left, right, len, pred_len / len,
+                        new Point(x1).toString(), new Point(x2).toString()));*/
                 right = x2;
                 x2 = x1;
-                x1 = left + Fib[n - k - 2] * (right - left) / Fib[n - k];
+                x1 = left + Fib.get(n - k - 2) * (right - left) / Fib.get(n - k);
                 f2 = f1;
+                counter++;
                 f1 = f.apply(x1);
             }
             pred_len = len;
             len = lenOX(left, right);
         }
-        writeLog(String.format("%d & [%.5f : %.5f] & %.5f & %.5f & %s & %s", ind, left, right, len, pred_len / len,
-                new Point(x1).toString(), new Point(x2).toString()));
+        /*writeLog(String.format("%d & [%.5f : %.5f] & %.5f & %.5f & %s & %s", ind, left, right, len, pred_len / len,
+                new Point(x1).toString(), new Point(x2).toString()));*/
         return (x1 + x2) / 2.0;
     }
 }

@@ -7,10 +7,11 @@ public class Main {
     final static double analyticAns_x_sinx = 0;
     final static double analyticAns_6 = 0.1099;// хз
     final static double analyticKek = -3.0;// хз
+
     public static void main(String[] args) {
-       test_7();
-       //test_6();
-       //test_x_sinx();
+        test_7();
+        //test_6();
+        //test_x_sinx();
         // test_kek();
     }
 
@@ -35,18 +36,23 @@ public class Main {
     }
 
     private static void run(Function<Double, Double> f, double analyticAns, double left, double right) {
-        List<OptimizationMethod> methods = new ArrayList<>();
+        List<AbstractMethod> methods = new ArrayList<>();
 
-        methods.add(new DichotomyMethod("Метод дихотомии", 1e-4, left, right, f, 1e-6));
-        methods.add(new GoldenRatioMethod( "Метод золотого сечения", 1e-4, left, right,  f));
-        methods.add(new FibonacciMethod("Метод фибоначи", 1e-4, left, right,  f));
-        methods.add(new SuccessiveParabolicMethod("Метод парабол", 1e-4, left, right, f));
-        methods.add(new BrentMethod("Метод Брента",1e-5, left, right,  f));
+        for (int i = 1; i <= 15; i++) {
+            double eps = Math.pow(10, -i);
+            methods.add(new DichotomyMethod("Метод дихотомии", eps, left, right, f, eps / 2));
+            methods.add(new GoldenRatioMethod("Метод золотого сечения", eps, left, right, f));
+            methods.add(new FibonacciMethod("Метод фибоначи", eps, left, right, f));
+            methods.add(new SuccessiveParabolicMethod("Метод парабол", eps, left, right, f));
+            methods.add(new BrentMethod("Метод Брента", eps, left, right, f));
 
-        for (OptimizationMethod method : methods) {
-            System.out.println(method.toString());
-            double ans = method.findMin();
-            System.out.format("ans = %.4f Δ = %.4f \n", ans, Math.abs(ans - analyticAns) );
+            for (AbstractMethod method : methods) {
+                double ans = method.findMin();
+                System.out.println(i + " " + method.counter);
+            }
+
+            methods.clear();
         }
     }
+
 }

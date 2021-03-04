@@ -61,8 +61,8 @@ public class BrentMethod extends AbstractMethod {
                 else
                     u = findMinDot(x, right);
             }
-            writeLog(String.format("%d & [%.4f:%.4f] & %.4f & %.4f & %s & %s & %s", ind++, left.getX(), right.getX(), len, pred_len / len,
-            x.toString(), w.toString(), u.toString()));
+            /*writeLog(String.format("%d & [%.4f:%.4f] & %.4f & %.4f & %s & %s & %s", ind++, left.getX(), right.getX(), len, pred_len / len,
+            x.toString(), w.toString(), u.toString()));*/
             if (x.compareToX(u) == 0)
                 return u.getX();
             SuccessiveParabolicMethod.recountPoint(left, x, right, u);
