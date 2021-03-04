@@ -39,7 +39,6 @@ public class BrentMethod extends AbstractMethod {
         Point v = new Point(x);
         double pred_len = (end - start);
         double len = pred_len;
-        writeLogInfAboutMethod();
         int ind = 0;
         while (true) {
             boolean isSuccessiveParabolic = false;
@@ -63,8 +62,6 @@ public class BrentMethod extends AbstractMethod {
                 else
                     u = findMinDot(x, right);
             }
-            writeLog(String.format("%d & [%.4f:%.4f] & %.4f & %.4f & %s & %s & %s & %s", ind++, left.getX(), right.getX(), len, pred_len / len,
-                    x.toString(), w.toString(), u.toString(), isSuccessiveParabolic ? "парабола" : "золотое сечение"));
             if (x.compareToX(u) == 0)
                 return u.getX();
             v.set(w);
