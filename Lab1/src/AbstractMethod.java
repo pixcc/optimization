@@ -27,7 +27,7 @@ public abstract class AbstractMethod implements OptimizationMethod {
         this.f = f;
     }
 
-    protected void writeLog(String  opts) {
+    protected void writeLog(String opts) {
         try(BufferedWriter writer = Files.newBufferedWriter(outputFile, FILE_CHARSET, StandardOpenOption.APPEND)) {
             StringBuilder ans = new StringBuilder();
             ans.append(opts);
