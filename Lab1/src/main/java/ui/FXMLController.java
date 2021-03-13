@@ -2,7 +2,7 @@ package ui;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.chart.ScatterChart;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ChoiceBox;
 import methods.*;
@@ -16,7 +16,7 @@ import java.util.stream.DoubleStream;
 public class FXMLController {
 
     @FXML
-    private ScatterChart<Double, Double> chart;
+    private LineChart<Double, Double> chart;
 
     @FXML
     private ChoiceBox<String> selectedTestBox;
@@ -31,10 +31,17 @@ public class FXMLController {
     public void initialize() {
         TestData testData = testMapping.get(selectedTestBox.getValue());
         OptimizationMethod optimizationMethod = getOptimizationMethod(testData);
-        /*for (Segment segment : optimizationMethod.getIntermediateSegments()) {
-            showFunctionSegment(testData.getF(), segment);
-        }*/
-        showFunctionSegment(testData.getF(), testData.getSegment());
+
+        if (optimizationMethod instanceof ParabolicMethod) {
+            ParabolicMethod parabolicMethod = (ParabolicMethod) optimizationMethod;
+            for (Parabola parabola : parabolicMethod.getIntermediateParabolas()) {
+                showFunctionSegment(x -> parabola.getA() * x * x + parabola.getB() * x + parabola.getC(), testData.getSegment());
+            }
+        } else {
+            for (Segment segment : optimizationMethod.getIntermediateSegments()) {
+                showFunctionSegment(testData.getF(), segment);
+            }
+        }
     }
 
     @FXML
@@ -49,7 +56,7 @@ public class FXMLController {
 
     private void showFunctionSegment(Function<Double, Double> f, Segment segment) {
         XYChart.Series<Double, Double> series = new XYChart.Series<>();
-        series.getData().addAll(calculateFunctionOnSegment(f, segment, 0.1));
+        series.getData().addAll(calculateFunctionOnSegment(f, segment, 0.01));
         chart.getData().add(series);
     }
 

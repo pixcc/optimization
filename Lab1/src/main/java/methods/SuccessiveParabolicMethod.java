@@ -2,7 +2,7 @@ package methods;
 
 import java.util.function.Function;
 
-public class SuccessiveParabolicMethod extends AbstractMethod {
+public class SuccessiveParabolicMethod extends AbstractMethod implements ParabolicMethod {
 
     public SuccessiveParabolicMethod(String name, double eps, double start, double end, Function<Double, Double> f) {
         super(name, eps, start, end, f);
