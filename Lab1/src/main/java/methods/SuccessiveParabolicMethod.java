@@ -1,8 +1,10 @@
+package methods;
+
 import java.util.function.Function;
 
 public class SuccessiveParabolicMethod extends AbstractMethod {
 
-    SuccessiveParabolicMethod(String name, double eps, double start, double end, Function<Double, Double> f) {
+    public SuccessiveParabolicMethod(String name, double eps, double start, double end, Function<Double, Double> f) {
         super(name, eps, start, end, f);
     }
 

@@ -1,3 +1,5 @@
+package methods;
+
 import java.util.function.Function;
 
 public abstract class AbstractMethod implements OptimizationMethod {

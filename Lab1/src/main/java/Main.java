@@ -1,3 +1,5 @@
+import methods.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -9,10 +11,10 @@ public class Main {
     final static double analyticKek = -3.0;// хз
 
     public static void main(String[] args) {
-       test_7();
-       //test_6();
-       //test_x_sinx();
-       //test_kek();
+        test_7();
+        //test_6();
+        //test_x_sinx();
+        //test_kek();
     }
 
     private static void test_for_brenton() {
@@ -44,10 +46,10 @@ public class Main {
         List<OptimizationMethod> methods = new ArrayList<>();
 
         methods.add(new DichotomyMethod("Метод дихотомии", 1e-6, left, right, f, 1e-6));
-        methods.add(new GoldenRatioMethod( "Метод золотого сечения", 1e-6, left, right,  f));
-        methods.add(new FibonacciMethod("Метод фибоначи", 1e-6, left, right,  f));
+        methods.add(new GoldenRatioMethod("Метод золотого сечения", 1e-6, left, right, f));
+        methods.add(new FibonacciMethod("Метод фибоначи", 1e-6, left, right, f));
         methods.add(new SuccessiveParabolicMethod("Метод парабол", 1e-6, left, right, f));
-        methods.add(new BrentMethod("Метод Брента",1e-6, left, right,  f));
+        methods.add(new BrentMethod("Метод Брента", 1e-6, left, right, f));
         for (OptimizationMethod method : methods) {
             System.out.println(method.toString());
             double ans = method.findMin();

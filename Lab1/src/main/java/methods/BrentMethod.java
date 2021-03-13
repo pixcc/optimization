@@ -1,3 +1,5 @@
+package methods;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -7,7 +9,7 @@ public class BrentMethod extends AbstractMethod {
     private static final double INV_GOLDEN_RATIO = (Math.sqrt(5) - 1) / 2;
 
 
-    BrentMethod(String name, double eps, double start, double end, Function<Double, Double> f) {
+    public BrentMethod(String name, double eps, double start, double end, Function<Double, Double> f) {
         super(name, eps, start, end, f);
     }
 

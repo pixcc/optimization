@@ -1,3 +1,5 @@
+package methods;
+
 import java.util.ArrayList;
 import java.util.function.Function;
 
