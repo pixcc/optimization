@@ -1,1 +1,11 @@
+.chart-symbol {
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 3px;
+    -fx-padding: 3px;
+}
 
+.pointed-chart-symbol {
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 4px;
+    -fx-padding: 4px;
+}
