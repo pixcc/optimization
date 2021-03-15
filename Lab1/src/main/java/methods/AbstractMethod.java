@@ -1,5 +1,7 @@
 package methods;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
 public abstract class AbstractMethod implements OptimizationMethod {
@@ -9,6 +11,7 @@ public abstract class AbstractMethod implements OptimizationMethod {
     protected final double end;
     protected final String name;
     protected final Function<Double, Double> f;
+    protected final List<Segment> intermediateSegments = new ArrayList<>();
 
     protected AbstractMethod(String name, double eps, double start, double end, Function<Double, Double> f) {
         this.name = name;
@@ -97,5 +100,10 @@ public abstract class AbstractMethod implements OptimizationMethod {
         public int compareTo(Point o) {
             return compareToX(o);
         }
+    }
+
+    @Override
+    public List<Segment> getIntermediateSegments() {
+        return intermediateSegments;
     }
 }

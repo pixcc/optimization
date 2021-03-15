@@ -13,6 +13,7 @@ public class GoldenRatioMethod extends AbstractMethod {
     public double findMin() {
         double l = start;
         double r = end;
+        intermediateSegments.add(new Segment(start, end));
         Point x1 = new Point(l + (1 - INV_GOLDEN_RATIO) * (r - l));
         Point x2 = new Point(l + INV_GOLDEN_RATIO * (r - l));
         while (compare(r - l, eps) > 0) {
@@ -25,6 +26,7 @@ public class GoldenRatioMethod extends AbstractMethod {
                 x1 = x2;
                 x2 = new Point(l + INV_GOLDEN_RATIO * (r - l));
             }
+            intermediateSegments.add(new Segment(l, r));
         }
         return (x1.getX() + x2.getX()) / 2;
     }
