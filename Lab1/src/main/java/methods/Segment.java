@@ -16,4 +16,8 @@ public class Segment {
     public double getRight() {
         return right;
     }
+
+    public double getLength() {
+        return right - left;
+    }
 }
