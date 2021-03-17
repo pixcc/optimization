@@ -1,8 +1,18 @@
 package methods;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Function;
 
 public class SuccessiveParabolicMethod extends AbstractMethod implements ParabolicMethod {
+
+    private final List<Parabola> intermediateParabolas = new ArrayList<>();
+
+    @Override
+    public List<Parabola> getIntermediateParabolas() {
+        return Collections.unmodifiableList(intermediateParabolas);
+    }
 
     public SuccessiveParabolicMethod(String name, double eps, double start, double end, Function<Double, Double> f) {
         super(name, eps, start, end, f);
@@ -61,6 +71,13 @@ public class SuccessiveParabolicMethod extends AbstractMethod implements Parabol
         Point right = new Point(end);
         Point middle = start_value(left, right);
         Point predMin = new Point(Math.max(start, end));
+
+        intermediateSegments.clear();
+        intermediateSegments.add(new Segment(left.getX(), right.getX()));
+
+        intermediateParabolas.clear();
+        intermediateParabolas.add(new Parabola(left.getX(), middle.getX(), right.getX()));
+
         while (true) {
             Point minDot = new Point(findMinDot(left, middle, right));
             if (minDot.compareToX(predMin) == 0) {
@@ -68,6 +85,10 @@ public class SuccessiveParabolicMethod extends AbstractMethod implements Parabol
             }
             recountPoint(left, middle, right, minDot);
             predMin.set(minDot);
+
+            intermediateSegments.add(new Segment(left.getX(), right.getX()));
+
+            intermediateParabolas.add(new Parabola(left.getX(), middle.getX(), right.getX()));
         }
     }
 }

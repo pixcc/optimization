@@ -17,14 +17,6 @@ public class BrentMethod extends AbstractMethod {
         return x.compareToX(w) != 0 && x.compareToX(v) != 0 && w.compareToX(v) != 0;
     }
 
-    double getMediana(Point... points) {
-        long ans = 0;
-        for (Point point : points) {
-            ans = ans ^ Double.doubleToRawLongBits(point.getX());
-        }
-        return Double.longBitsToDouble(ans);
-    }
-
 
     Point findMinDot(Point left, Point right) {
         Point x1 = new Point(left.getX() + (1 - INV_GOLDEN_RATIO) * (right.getX() - left.getX()));
@@ -40,7 +32,8 @@ public class BrentMethod extends AbstractMethod {
         Point w = new Point(x);
         Point v = new Point(x);
         double pred_len = (end - start);
-
+        intermediateSegments.clear();
+        intermediateSegments.add(new Segment(left.getX(), right.getX()));
         while (true) {
             boolean isSuccessiveParabolic = false;
             Point u = new Point(x);
@@ -70,6 +63,7 @@ public class BrentMethod extends AbstractMethod {
             pred_len = lenOX(left, right);
             SuccessiveParabolicMethod.recountPoint(left, x, right, u);
             x.set(u);
+            intermediateSegments.add(new Segment(left.getX(), right.getX()));
         }
     }
 }
