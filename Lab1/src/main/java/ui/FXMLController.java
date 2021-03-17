@@ -56,12 +56,8 @@ public class FXMLController {
         chart.getData().addAll(series);
 
 
-        statisticsLabel.setText(String.format("""
-                Minimum point: %f
-                Minimum value: %f
-                Iterations: %d
-                
-                """, minPoint,testData.getF().apply(minPoint), segmentList.size()));
+        statisticsLabel.setText(String.format("Minimum point: %f\nMinimum value: %f\nIterations: %d",
+                minPoint,testData.getF().apply(minPoint), segmentList.size()));
     }
 
 
