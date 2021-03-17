@@ -14,6 +14,7 @@ public class DichotomyMethod extends AbstractMethod {
     public double findMin() {
         Point left = new Point(start);
         Point right = new Point(end);
+        intermediateSegments.clear();
         intermediateSegments.add(new Segment(left.getX(), right.getX()));
         while (right.getX() - left.getX() > eps * 2) {
             Point x1 = new Point((right.getX() + left.getX() - delta) / 2.0);

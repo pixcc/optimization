@@ -25,6 +25,7 @@ public class FibonacciMethod extends AbstractMethod {
         Point right = new Point(end);
         Point x1 = new Point(left.getX() + Fib.get(n - 2) * (right.getX() - left.getX()) / Fib.get(n));
         Point x2 = new Point(left.getX() + Fib.get(n - 1) * (right.getX() - left.getX()) / Fib.get(n));
+        intermediateSegments.clear();
         intermediateSegments.add(new Segment(left.getX(), right.getX()));
         for (int k = 1; k <= n - 2; k++) {
             if (x1.getY() > x2.getY()) {
